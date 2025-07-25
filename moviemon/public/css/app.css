@@ -12,9 +12,9 @@ body {
     text-align: center;
 }
 
-.map {
+/* .map {
     background-color: green;
-}
+} */
 
 .row {
     display: flex;
@@ -27,8 +27,28 @@ body {
     border: 1px solid black;
     text-align: center;
     /* align-items: center; */
+    background-color: green;
+}
+
+.player-cell {
+    height: 64px;
+    width: 64px;
+    border: 1px solid black;
+    text-align: center;
+    background-color: red;
 }
 
 .menu-button {
-    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.controls { 
+    display: grid; 
+    grid-template-columns: 50px 50px 50px; 
+    width: 150px; 
+    margin: 100px auto;
+}
+    
+.controls button { 
+    height: 50px; 
 }

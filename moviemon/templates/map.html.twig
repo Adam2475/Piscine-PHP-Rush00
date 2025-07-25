@@ -2,6 +2,8 @@
 
 {% block body %}
 
+<button class="menu-button"><a href="/">Menu</a></button>
+
 <div class="map">
 
     {% for row in map %}
@@ -10,7 +12,7 @@
 
             {% for cell in row %}
 
-                <div class="cell"> {{ cell }} </div>
+                <div class="{% if cell == 'P' %}player-cell{% else %}cell{% endif %}"> {{ cell }} </div>
 
             {% endfor %}
 
@@ -20,8 +22,14 @@
 
 </div>
 
-<button class="menu-button"><a href="/">Menu</a></button>
-
+<div class="controls">
+  <div></div>
+  <button><a href="/move/up">⬆️</a></button>
+  <div></div>
+  <button><a href="/move/left">⬅️</a></button>
+  <button><a href="/move/down">⬇️</a></button>
+  <button><a href="/move/right">➡️</a></button>
+</div>
 
 
 {% endblock %}
