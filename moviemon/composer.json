@@ -1,8 +1,6 @@
 {
-    "name": "symfony/website-skeleton",
     "type": "project",
-    "license": "MIT",
-    "description": "A skeleton to start a new Symfony website",
+    "license": "proprietary",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
