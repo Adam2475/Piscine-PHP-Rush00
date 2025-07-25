@@ -2,131 +2,98 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Ramsey\Uuid\Uuid;
+use App\Entity\Moviemon;
 
-/**
- * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\HasLifecycleCallbacks
- */
-class User implements UserInterface
+class User
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    private string $name;
+    private int $health = 100;
+    private int $strength = 10;
+    private array $position = [2, 2];
 
-    #[ORM\Column(length: 180, unique: true)]
-    private ?string $uuid = null;
+    /** @var Moviemon[] */
+    private array $capturedMoviemons = [];
 
-    #[ORM\Column(length: 15)]
-    private ?string $username = null;
+    /** @var Moviemon[] */
+    private array $remainingMoviemons = [];
 
-    #[ORM\Column(type: 'integer', options: ['default' => 50], nullable: false)]
-    private ?int $strength = 50;
-
-    #[ORM\Column(type: 'integer', options: ['default' => 50], nullable: false)]
-    private ?int $max_health = 50;
-
-    #[ORM\Column(type: 'json')]
-    private array $moviemonCollection = [];
-
-    #[ORM\Column(type: 'json')]
-    private array $catchableMoviemon = [];
-
-    public function getId(): ?int
+    // Constructor initializing $name
+    public function __construct(string $name)
     {
-        return $this->id;
+        $this->name = $name;
     }
 
-    public function getUuid(): ?string
+    // --- Getters & Setters ---
+
+    public function getName(): string
     {
-        return $this->uuid;
+        return $this->name;
     }
 
-    public function setUuid(string $uuid): static
+    public function setName(string $name): void
     {
-        $this->uuid = $uuid;
-
-        return $this;
+        $this->name = $name;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
-    public function generateUuid(): void
+    public function getHealth(): int
     {
-        if ($this->uuid === null) {
-            $this->uuid = Uuid::uuid4()->toString();
-        }
+        return $this->health;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUserIdentifier(): string
+    public function setHealth(int $health): void
     {
-        return (string) $this->uuid;
+        $this->health = $health;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials(): void
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
-    }
-
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): static
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    public function getStrength(): ?int
+    public function getStrength(): int
     {
         return $this->strength;
     }
 
-    public function setStrength(int $strength): static
+    public function setStrength(int $strength): void
     {
         $this->strength = $strength;
-
-        return $this;
     }
 
-    public function getMaxHealth(): ?int
+    public function getPosition(): array
     {
-        return $this->max_health;
+        return $this->position;
     }
 
-    public function setMaxHealth(int $max_health): static
+    public function setPosition(array $position): void
     {
-        $this->max_health = $max_health;
-
-        return $this;
+        $this->position = $position;
     }
 
-    public function incrementLevel(): static
+    /**
+     * @return Moviemon[]
+     */
+    public function getCapturedMoviemons(): array
     {
-        $this->strength += 10;
-        $this->max_health += 10;
-        return $this;
+        return $this->capturedMoviemons;
     }
 
-    public function getRoles(): array
+    /**
+     * @param Moviemon[] $capturedMoviemons
+     */
+    public function setCapturedMoviemons(array $capturedMoviemons): void
     {
-        return ['ROLE_USER'];
+        $this->capturedMoviemons = $capturedMoviemons;
+    }
+
+    /**
+     * @return Moviemon[]
+     */
+    public function getRemainingMoviemons(): array
+    {
+        return $this->remainingMoviemons;
+    }
+
+    /**
+     * @param Moviemon[] $remainingMoviemons
+     */
+    public function setRemainingMoviemons(array $remainingMoviemons): void
+    {
+        $this->remainingMoviemons = $remainingMoviemons;
     }
 }

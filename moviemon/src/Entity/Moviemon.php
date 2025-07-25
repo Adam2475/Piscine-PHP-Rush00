@@ -2,79 +2,46 @@
 
 namespace App\Entity;
 
-use App\Repository\MoviemonRepository;
-use Doctrine\ORM\Mapping as ORM;
-
-#[ORM\Entity(repositoryClass: MoviemonRepository::class)]
 class Moviemon
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    private string $name;
+    private int $health;
+    private int $strength;
+    private string $urlPoster;
 
-    #[ORM\Column(length: 50)]
-    private ?string $name = null;
-
-    #[ORM\Column]
-    private ?int $health = null;
-
-    #[ORM\Column]
-    private ?int $strength = null;
-
-    #[ORM\Column (type: 'string', nullable: false)]
-    private ?string $url_poster = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
-
-    public function setName(string $name): static
+    public function setName(string $name): void
     {
         $this->name = $name;
-
-        return $this;
     }
 
-    public function getHealth(): ?int
+    public function getHealth(): int
     {
         return $this->health;
     }
-
-    public function setHealth(int $health): static
+    public function setHealth(int $health): void
     {
         $this->health = $health;
-
-        return $this;
     }
 
-    public function getStrength(): ?int
+    public function getStrength(): int
     {
         return $this->strength;
     }
-
-    public function setStrength(int $strength): static
+    public function setStrength(int $strength): void
     {
         $this->strength = $strength;
-
-        return $this;
     }
 
-    public function getUrlPoster(): ?string
+    public function getUrlPoster(): string
     {
-        return $this->url_poster;
+        return $this->urlPoster;
     }
-
-    public function setUrlPoster(string $url_poster): static
+    public function setUrlPoster(string $urlPoster): void
     {
-        $this->url_poster = $url_poster;
-
-        return $this;
+        $this->urlPoster = $urlPoster;
     }
 }
