@@ -16,3 +16,21 @@ rm symfony_linux_amd64.tar.gz
 # Avviare progetto:
 
 composer create-project symfony/website-skeleton nome_progetto
+
+## database:
+    sudo mysql -u root
+    CREATE DATABASE moviemon CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+    CREATE USER 'moviemon'@'localhost' IDENTIFIED BY '1234';           
+    GRANT ALL PRIVILEGES ON moviemon.* TO 'moviemon'@'localhost';
+    FLUSH PRIVILEGES;
+    EXIT;
+
+# Ruoli:
+
+## Persona 1:
+Connettere API (https://www.omdbapi.com/);
+
+## Persona 2:
+Creare la mappa;
+
+## Persona 3:
