@@ -24,15 +24,7 @@ sudo apt install php-mysql
 
 # Avviare progetto:
 
-composer create-project symfony/website-skeleton nome_progetto
-
-## database:
-    sudo mysql -u root
-    CREATE DATABASE moviemon CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-    CREATE USER 'moviemon'@'localhost' IDENTIFIED BY '1234';           
-    GRANT ALL PRIVILEGES ON moviemon.* TO 'moviemon'@'localhost';
-    FLUSH PRIVILEGES;
-    EXIT;
+composer create-project symfony/website-skeleton moviemon
 
 # Ruoli:
 

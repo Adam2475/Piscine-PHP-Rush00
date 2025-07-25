@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Ramsey\Uuid\Uuid;
 
-
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\HasLifecycleCallbacks
@@ -25,11 +24,17 @@ class User implements UserInterface
     #[ORM\Column(length: 15)]
     private ?string $username = null;
 
-    #[ORM\Column(type: 'integer', options: ['default' => 1], nullable: false)]
-    private ?int $strength = 1;
+    #[ORM\Column(type: 'integer', options: ['default' => 50], nullable: false)]
+    private ?int $strength = 50;
 
-    #[ORM\Column(type: 'integer', options: ['default' => 10], nullable: false)]
-    private ?int $max_health = 10;
+    #[ORM\Column(type: 'integer', options: ['default' => 50], nullable: false)]
+    private ?int $max_health = 50;
+
+    #[ORM\Column(type: 'json')]
+    private array $moviemonCollection = [];
+
+    #[ORM\Column(type: 'json')]
+    private array $catchableMoviemon = [];
 
     public function getId(): ?int
     {
@@ -115,8 +120,8 @@ class User implements UserInterface
 
     public function incrementLevel(): static
     {
-        $this->strength++;
-        $this->max_health++;
+        $this->strength += 10;
+        $this->max_health += 10;
         return $this;
     }
 
