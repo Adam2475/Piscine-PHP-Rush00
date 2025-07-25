@@ -31,9 +31,6 @@ class User implements UserInterface
     #[ORM\Column(type: 'integer', options: ['default' => 10], nullable: false)]
     private ?int $max_health = 10;
 
-    #[ORM\Column]
-    private array $roles = [];
-
     public function getId(): ?int
     {
         return $this->id;
@@ -69,25 +66,6 @@ class User implements UserInterface
     public function getUserIdentifier(): string
     {
         return (string) $this->uuid;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): static
-    {
-        $this->roles = $roles;
-
-        return $this;
     }
 
     /**
@@ -140,5 +118,10 @@ class User implements UserInterface
         $this->strength++;
         $this->max_health++;
         return $this;
+    }
+
+    public function getRoles(): array
+    {
+        return ['ROLE_USER'];
     }
 }
