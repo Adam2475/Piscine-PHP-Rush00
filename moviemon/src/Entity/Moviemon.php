@@ -22,9 +22,6 @@ class Moviemon
     #[ORM\Column]
     private ?int $strength = null;
 
-    #[ORM\Column]
-    private ?float $catch_rate = null;
-
     #[ORM\Column (type: 'string', nullable: false)]
     private ?string $url_poster = null;
 
@@ -65,18 +62,6 @@ class Moviemon
     public function setStrength(int $strength): static
     {
         $this->strength = $strength;
-
-        return $this;
-    }
-
-    public function getCatchRate(): ?float
-    {
-        return $this->catch_rate;
-    }
-
-    public function setCatchRate(float $catch_rate): static
-    {
-        $this->catch_rate = $catch_rate;
 
         return $this;
     }
