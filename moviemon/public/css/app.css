@@ -1,0 +1,29 @@
+body {
+    background-color: #fafafa;
+    font-family: Arial, sans-serif;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.menu {
+    text-align: center;
+}
+
+.map {
+    background-color: green;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.cell {
+    height: 64px;
+    width: 64px;
+    border: 1px solid black;
+    text-align: center;
+    /* align-items: center; */
+}

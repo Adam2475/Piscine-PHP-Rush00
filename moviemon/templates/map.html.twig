@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="map">
+
+    {% for row in map %}
+        
+        <div class="row">
+
+            {% for cell in row %}
+
+                <div class="cell"> {{ cell }} </div>
+
+            {% endfor %}
+
+        </div>
+        
+    {% endfor %}
+
+</div>
+
+
+
+{% endblock %}
