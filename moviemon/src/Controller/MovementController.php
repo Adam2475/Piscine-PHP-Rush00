@@ -23,6 +23,10 @@ class MovementController extends AbstractController
         $x = $position[0];
         $y = $position[1];
 
+        $size = ($gameManager->getMapSize() - 1);
+
+        // exit;
+
         // Handle direction
         // max prevent to go above 0
         // index for assumes map size 5
@@ -32,13 +36,13 @@ class MovementController extends AbstractController
                 $x = max(0, $x - 1);
                 break;
             case 'down':
-                $x = min(4, $x + 1);
+                $x = min($size, $x + 1);
                 break;
             case 'left':
                 $y = max(0, $y - 1);
                 break;
             case 'right':
-                $y = min(4, $y + 1);
+                $y = min($size, $y + 1);
                 break;
         }
 
