@@ -59,6 +59,7 @@ class BattleController extends AbstractController
         if (random_int(0, 4) != 0)
         {
             $this->addFlash('success', 'You escaped successfully!');
+            $user->setHealth($user->getMaxHealth());
             return $this->redirectToRoute('overworld');
         }
         else
@@ -117,7 +118,7 @@ class BattleController extends AbstractController
             $this->addFlash('error', 'Moviemon not found');
             return $this->redirectToRoute('overworld');
         }
-        $damage = round(random_int(1, $moviemon->getStrength()) / 2);
+        $damage = round(random_int(1, $moviemon->getStrength()) / 5);
         $user->setHealth(max(0, $user->getHealth() - $damage));
         if ($user->getHealth() <= 0)
         {
@@ -127,5 +128,39 @@ class BattleController extends AbstractController
         return $this->redirectToRoute('battle', [
             'moviemon' => $moviemon->getName()
         ]);
+    }
+
+    #[Route('/battle/catch', name: 'battle_catch', methods: ['GET'])]
+    public function catch(Request $request, GameManager $gameManager): Response
+    {
+        $user = $gameManager->getUser();
+        if (!$user instanceof User)
+            return $this->redirectToRoute('homepage');
+        $moviemonName = $request->query->get('moviemon');
+        if (!is_string($moviemonName) || $moviemonName === '') {
+            $this->addFlash('error', 'No Moviemon specified.');
+            return $this->redirectToRoute('overworld');
+        }
+        $moviemon = $gameManager->getMoviemon($user, $moviemonName);
+        if (!$moviemon instanceof Moviemon)
+        {
+            logger()->error('Moviemon not found', ['moviemon' => $moviemonName]);
+            $this->addFlash('error', 'Moviemon not found');
+            return $this->redirectToRoute('overworld');
+        }
+        $probability = 100 - round($moviemon->getHealth() / $moviemon->getStrength() * 100);
+        if ($probability <= 0)
+            $probability = 1;
+        if (random_int(0, 100) < $probability)
+        {
+            $this->addFlash('success', 'You caught ' . $moviemon->getName() . '!');
+            $user->catchMoviemon($moviemon);
+            return $this->redirectToRoute('overworld');
+        }
+        else
+        {
+            $this->addFlash('error', 'You failed to catch ' . $moviemon->getName() . '!');
+            return $this->redirectToRoute('battle_losehp', ['moviemon' => $moviemon->getName()]);
+        }
     }
 }

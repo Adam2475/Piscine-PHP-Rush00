@@ -10,6 +10,7 @@ class User
     private int $health = 100;
     private int $strength = 10;
     private array $position = [2, 2];
+    private int $max_health = 100;
 
     /** @var Moviemon[] */
     private array $capturedMoviemons = [];
@@ -124,7 +125,8 @@ class User
 
     private function gainHealthAndStrength(Moviemon $moviemon): void
     {
-        $this->health += $moviemon->getHealth() / 10;
+        $this->max_health += $this->max_health / 10;
+        $this->health = $this->max_health;
         $this->strength += $moviemon->getStrength() / 10;
     }
 }

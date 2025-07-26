@@ -9,17 +9,17 @@
             <span style="color: #2d7a2d;">Vita: {{ user.health }}</span> |
             <span style="color: #1e4b8a;">Forza: {{ user.strength }}</span>
         </div>
-        <img src="/moviemon/backsprite.png" alt="Backsprite" style="width: 120px; margin-bottom: 20px; margin-top: 10px;">
+        <img id="user-backsprite" src="/moviemon/backsprite.png" alt="Backsprite" style="width: 120px; margin-bottom: 20px; margin-top: 10px; transition: transform 0.2s;">
     </div>
 
     <!-- Moviemon section -->
     <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;">
         <div style="width: 100%; text-align: center; margin-bottom: 10px;">
-            <strong>{{ moviemon.name }}</strong><br>
+            <strong>{{ moviemon.name }}</strong><br> 
             <span style="color: #c0392b;">Vita: {{ moviemon.health }}</span> |
             <span style="color: #8e44ad;">Forza: {{ moviemon.strength }}</span>
         </div>
-        <img src="{{ moviemon.urlPoster }}" alt="Moviemon Poster" style="width: 180px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+        <img id="moviemon-poster" src="{{ moviemon.urlPoster }}" alt="Moviemon Poster" style="width: 180px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: transform 0.2s;">
     </div>
 
     <!-- Actions section -->
@@ -33,4 +33,17 @@
         </div>
     </div>
 </div>
+<script>
+// Simple jump animation for both images
+function jumpImage(id, maxPx) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const jump = Math.floor(Math.random() * maxPx * 2) - maxPx; // from -maxPx to +maxPx
+    el.style.transform = `translateY(${jump}px)`;
+}
+setInterval(() => {
+    jumpImage('user-backsprite', 8);
+    jumpImage('moviemon-poster', 8);
+}, 400);
+</script>
 {% endblock %}
