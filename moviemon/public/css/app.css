@@ -148,3 +148,46 @@ html, body {
 .moviedex-actions .btn:hover {
     background-color: #0056b3;
 }
+
+
+.result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3em;
+}
+
+.result img {
+    max-width: 90%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    margin-bottom: 2em;
+}
+
+.result a {
+    font-size: 18px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.result a:hover {
+    background-color: #218838;
+}
+
+
+.result h1 {
+    font-size: 2.5em;
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
