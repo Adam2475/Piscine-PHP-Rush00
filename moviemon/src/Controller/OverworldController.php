@@ -19,18 +19,27 @@ class OverworldController extends AbstractController
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     public function StartNewGame(GameManager $gameManager, Request $request)
     {
-        if ($request->isMethod('POST')) {
-        $username = $request->request->get('player_name');
+        if ($request->isMethod('POST'))
+        {
+            $username = $request->request->get('player_name');
+            $mapSize = (int) $request->request->get('map_size');
+            // $map = array($mapS);
+            $gameManager->setMapSize($mapSize);
+            // $session = $request->getSession();
+            // $session->set('map_size', $mapSize);
+            // echo $mapSize;
+            // print_r($gameManager->getMapSize());
+            // exit;
 
-        if (!$username) {
-            return new Response("Missing player name.", 400);
-        }
+            if (!$username) {
+                return new Response("Missing player name.", 400);
+            }
 
-        $gameManager->startNewGame($username);
-        $user = $gameManager->getUser();
-        $user->setPosition([2, 3]);
-
-        return $this->redirectToRoute('overworld');
+            $gameManager->startNewGame($username, $mapSize);
+            $user = $gameManager->getUser();
+            $user->setPosition([2, 3]);
+            $gameManager->setMapSize($mapSize);
+            return $this->redirectToRoute('overworld');
         }
         // Fallback nel caso di request GET
         return $this->render('main_menu.html.twig');
@@ -73,6 +82,8 @@ class OverworldController extends AbstractController
     #[Route('/overworld', name: 'overworld')]
     public function index(GameManager $gameManager): Response
     {
+        // print_r($gameManager->getMapSize());
+        // exit;
         $map = $this->generateMap($gameManager);
         $toCatch = $this->getRemainingMovies($gameManager);
         $catched = $this->getCatchedMovies($gameManager);
@@ -117,11 +128,12 @@ class OverworldController extends AbstractController
     public function generateMap(GameManager $gameManager)
     {
         $grid = [];
-        $mapSize = [];
+        // $mapSize = [];
         $mapSize = $gameManager->getMapSize();
         // var_dump($mapSize);
-        $rows = $mapSize[0];
-        $columns = $mapSize[1];
+
+        $rows = $mapSize;
+        $columns = $mapSize;
 
         $user = $gameManager->getUser();
         $playerPosition = $user->getPosition();

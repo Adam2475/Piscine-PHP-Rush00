@@ -11,7 +11,7 @@ use App\Entity\Moviemon;
 
 class GameManager
 {
-    private $mapSize = [];
+    private $mapSize;
     private const SAVE_DIR = __DIR__ . '/../../var/saves/';
     private $session;
     private SerializerInterface $serializer;
@@ -27,14 +27,15 @@ class GameManager
         $this->serializer = $serializer;
         $this->omdb = $omdb;
         $this->filesystem = new Filesystem();
-        $this->mapSize = [6, 6];
+        // $this->mapSize = [6, 6];
+        $this->mapSize = $this->session->get('map_size');
 
         if (!$this->filesystem->exists(self::SAVE_DIR)) {
             $this->filesystem->mkdir(self::SAVE_DIR);
         }
     }
 
-    public function startNewGame(string $username): void
+    public function startNewGame(string $username, int $mapSize): void
     {
         $user = new User(
             $username,
@@ -50,6 +51,13 @@ class GameManager
         $user->setRemainingMoviemons($moviemons);
         $user->setCapturedMoviemons([]);
 
+        // $session = $request->getSession();
+        echo $mapSize;
+        // exit;
+        $this->session->set('map_size', $mapSize);
+
+        // $map = array($mapSize, $mapSize);
+        // $this->session->set('map_size', $map);
         $this->session->set('user_name', $username);
         $this->saveUser($user);
     }
@@ -134,8 +142,13 @@ class GameManager
         return null;
     }
 
-    public function getMapSize(): array
+    public function getMapSize(): int
     {
         return $this->mapSize;
+    }
+
+    public function setMapSize(int $mapSize): void
+    {
+        $this->mapSize = array($mapSize, $mapSize);
     }
 }
