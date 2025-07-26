@@ -9,9 +9,17 @@
         <button type="submit">Start New Game</button>
     </form>
 
-    <p><a href="{{ path('save') }}">Save Game</a><p>
+    {% if fromOverworld %}
+        <p><a href="{{ path('save') }}">Save Game</a></p>
+    {% else %}
+        <p><a href="#">Save Game</a></p>
+    {% endif %}
+
     <p><a href="{{ path('load') }}">Load Game</a><p>
+
+    {% if fromOverworld %}
     <p><a href="{{ path('overworld') }}">Cancel</a></p>
+    {% endif %}
 </div>
 {% endblock %}
 
