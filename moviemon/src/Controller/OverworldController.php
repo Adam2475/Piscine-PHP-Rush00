@@ -17,24 +17,24 @@ class OverworldController extends AbstractController
     //TODO: aggiungere grandezza della mappa al game manager
     #[Route('/new', name: 'new')]
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
-	public function StartNewGame(GameManager $gameManager, Request $request)
-	{
-	    if ($request->isMethod('POST')) {
-		$username = $request->request->get('player_name');
+    public function StartNewGame(GameManager $gameManager, Request $request)
+    {
+        if ($request->isMethod('POST')) {
+        $username = $request->request->get('player_name');
 
-		if (!$username) {
-		    return new Response("Missing player name.", 400);
-		}
+        if (!$username) {
+            return new Response("Missing player name.", 400);
+        }
 
-		$gameManager->startNewGame($username);
-		$user = $gameManager->getUser();
-		$user->setPosition([2, 3]);
+        $gameManager->startNewGame($username);
+        $user = $gameManager->getUser();
+        $user->setPosition([2, 3]);
 
-		return $this->redirectToRoute('overworld');
-	    }
-	    // Fallback nel caso di request GET
-	    return $this->render('main_menu.html.twig');
-	}
+        return $this->redirectToRoute('overworld');
+        }
+        // Fallback nel caso di request GET
+        return $this->render('main_menu.html.twig');
+    }
 
         #[Route('/load', name: 'load')]
     public function loadGameMenu(): Response
@@ -137,14 +137,16 @@ class OverworldController extends AbstractController
         return ($grid);
     }
 
-    #[Route('/overworld/moviedex', name: 'moviedex')]
+    #[Route('/moviedex', name: 'moviedex')]
     public function moviedex(GameManager $gameManager): Response
     {
         $user = $gameManager->getUser();
         $catched = $this->getCatchedMovies($gameManager);
+        $moviemons = $user->getCapturedMoviemons();
         return $this->render('moviedex.html.twig', [
             'user' => $user,
             'catched' => $catched,
+            'moviemons' => $moviemons,
         ]);
     }
 }
