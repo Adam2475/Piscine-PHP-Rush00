@@ -26,10 +26,45 @@ class OverworldController extends AbstractController
     public function index(GameManager $gameManager): Response
     {
         $map = $this->generateMap($gameManager);
+        $toCatch = $this->getRemainingMovies($gameManager);
+        $catched = $this->getCatchedMovies($gameManager);
         return $this->render('map.html.twig', [
             'map' => $map,
+            'catchable' => $toCatch,
+            'catched' => $catched,
         ]);
     }
+
+    public function getRemainingMovies(GameManager $gameManager): array
+    {
+        $user = $gameManager->getUser();
+        // var_dump($user->getRemainingMoviemons());
+        $entities = $user->getRemainingMoviemons();
+        $remaining = [];
+
+        foreach ($entities as $movie)
+        {
+            $remaining[] = $movie->getName();
+        }
+        // print_r($remaining);
+        return($remaining);
+    }
+
+        public function getCatchedMovies(GameManager $gameManager): array
+    {
+        $user = $gameManager->getUser();
+        // var_dump($user->getRemainingMoviemons());
+        $entities = $user->getCapturedMoviemons();
+        $remaining = [];
+
+        foreach ($entities as $movie)
+        {
+            $remaining[] = $movie->getName();
+        }
+        // print_r($remaining);
+        return($remaining);
+    }
+
 
     public function generateMap(GameManager $gameManager)
     {
@@ -39,18 +74,7 @@ class OverworldController extends AbstractController
         $columns = 5;
 
         $user = $gameManager->getUser();
-
-        // var_dump($user);
-
-        // finding center of the map
-        // $playerX = (int) floor($rows / 2);
-        // $playerY = (int) floor($columns / 2);
-
-        // $playerPosition = [$playerX, $playerY];
         $playerPosition = $user->getPosition();
-
-        // debug
-        // echo "player X: " . $playerPosition[0] . "  player Y: " . $playerPosition[1];
 
         for ($y = 0; $y < $columns; $y++) {
             $row = [];

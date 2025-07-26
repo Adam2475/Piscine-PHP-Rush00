@@ -2,34 +2,56 @@
 
 {% block body %}
 
-<button class="menu-button"><a href="/">Menu</a></button>
+<div class="content">
 
-<div class="map">
-
-    {% for row in map %}
-        
-        <div class="row">
-
-            {% for cell in row %}
-
-                <div class="{% if cell == 'P' %}player-cell{% else %}cell{% endif %}"> {{ cell }} </div>
-
+    <div class="catched">
+        <h3>Catched Moviemons</h3>
+        <ul>
+            {% for movie in catched %}
+                <li>{{ movie }}</li>
             {% endfor %}
+        </ul>
+    </div>
 
+    <div class="center">
+
+    <button class="menu-button"><a href="/">Menu</a></button>
+
+        <div class="map">
+            {% for row in map %}
+                <div class="row">
+
+                    {% for cell in row %}
+
+                        <div class="{% if cell == 'P' %}player-cell{% else %}cell{% endif %}"> {{ cell }} </div>
+
+                    {% endfor %}
+
+                </div>
+            {% endfor %}
         </div>
-        
-    {% endfor %}
+
+        <div class="controls">
+            <div></div>
+            <button><a href="/move/up">⬆️</a></button>
+            <div></div>
+            <button><a href="/move/left">⬅️</a></button>
+            <button><a href="/move/down">⬇️</a></button>
+            <button><a href="/move/right">➡️</a></button>
+        </div>
+
+
+    </div>
+
+    <div class="remaining">
+        <h3>Remaining Moviemons</h3>
+        <ul>
+            {% for movie in catchable %}
+                <li>{{ movie }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 
 </div>
-
-<div class="controls">
-  <div></div>
-  <button><a href="/move/up">⬆️</a></button>
-  <div></div>
-  <button><a href="/move/left">⬅️</a></button>
-  <button><a href="/move/down">⬇️</a></button>
-  <button><a href="/move/right">➡️</a></button>
-</div>
-
 
 {% endblock %}

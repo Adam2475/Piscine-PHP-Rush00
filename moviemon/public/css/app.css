@@ -52,3 +52,29 @@ body {
 .controls button { 
     height: 50px; 
 }
+
+/* moviemon list */
+
+.content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.remaining, .catched {
+    /* background-color: red; */
+    width: 30%;
+    padding: 2em;
+    margin: 0.5em;
+    /* margin-left: 10%; */
+}
+
+/* .catched {
+    width: 30%;
+} */
+
+.center {
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+}
