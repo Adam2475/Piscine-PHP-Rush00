@@ -84,7 +84,7 @@ class OverworldController extends AbstractController
             $grid[] = $row;
         }
 
-        $grid[$playerPosition[0]][$playerPosition[1]] = 'P';
+        $grid[$playerPosition[0]][$playerPosition[1]] = 'L';
 
         return ($grid);
     }

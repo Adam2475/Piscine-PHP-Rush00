@@ -35,7 +35,10 @@ body {
     width: 64px;
     border: 1px solid black;
     text-align: center;
-    background-color: red;
+    /* background-color: red; */
+    background-image: url('../images/tileAsh.png');
+    background-size: cover;
+    background-position: center;
 }
 
 .menu-button {
