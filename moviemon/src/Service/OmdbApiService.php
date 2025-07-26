@@ -56,6 +56,7 @@ class OmdbApiService
         $imdbRating = is_numeric($data['imdbRating'] ?? null) ? (float)$data['imdbRating'] : 5.0;
         $metascore = is_numeric($data['Metascore'] ?? null) ? (int)$data['Metascore'] : 50;
         $moviemon->setHealth(round($imdbRating * 10) ?? 10);
+        $moviemon->setMaxHealth($moviemon->getHealth());
         $moviemon->setStrength(round($metascore) ?? 10);
         $posterUrl = $data['Poster'] ?? '/images/unknown_poster.jpg';
         if ($this->empty_url($posterUrl))

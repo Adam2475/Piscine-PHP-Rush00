@@ -59,7 +59,6 @@ class BattleController extends AbstractController
         if (random_int(0, 4) != 0)
         {
             $this->addFlash('success', 'You escaped successfully!');
-            $user->setHealth($user->getMaxHealth());
             return $this->redirectToRoute('overworld');
         }
         else
@@ -162,7 +161,6 @@ class BattleController extends AbstractController
         if (random_int(0, 100) < $probability)
         {
             $this->addFlash('success', 'You caught ' . $moviemon->getName() . '!');
-            $moviemon->setHealth($moviemon->getMaxHealth());
             $user->defeatMoviemon($moviemon);
             return $this->redirectToRoute('overworld');
         }
