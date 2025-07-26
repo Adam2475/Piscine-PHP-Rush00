@@ -66,6 +66,16 @@ class User
         $this->position = $position;
     }
 
+    public function getMaxHealth(): int
+    {
+        return $this->max_health;
+    }
+
+    public function setMaxHealth(int $max_health): void
+    {
+        $this->max_health = $max_health;
+    }
+
     /**
      * @return Moviemon[]
      */
