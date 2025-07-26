@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Finder\Finder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 // including the Game Manager service
 use App\Service\GameManager;
@@ -13,12 +16,57 @@ class OverworldController extends AbstractController
 {
     //TODO: aggiungere grandezza della mappa al game manager
     #[Route('/new', name: 'new')]
-    public function StartNewGame(GameManager $gameManager)
+    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
+	public function StartNewGame(GameManager $gameManager, Request $request)
+	{
+	    if ($request->isMethod('POST')) {
+		$username = $request->request->get('player_name');
+
+		if (!$username) {
+		    return new Response("Missing player name.", 400);
+		}
+
+		$gameManager->startNewGame($username);
+		$user = $gameManager->getUser();
+		$user->setPosition([2, 3]);
+
+		return $this->redirectToRoute('overworld');
+	    }
+	    // Fallback nel caso di request GET
+	    return $this->render('main_menu.html.twig');
+	}
+
+        #[Route('/load', name: 'load')]
+    public function loadGameMenu(): Response
     {
-        $gameManager->StartNewGame("testUser");
-        $user = $gameManager->getUser();
-        $position = array(2, 3);
-        $user->setPosition($position);
+        $saveDir = __DIR__ . '/../../var/saves';
+
+        $finder = new Finder();
+        $finder->files()->in($saveDir)->name('*.json');
+
+        $saves = [];
+        foreach ($finder as $file) {
+            $filename = $file->getFilenameWithoutExtension();
+            $saves[] = $filename;
+        }
+
+        return $this->render('load.html.twig', [
+            'saves' => $saves,
+        ]);
+    }
+
+    #[Route('/load/{playerName}', name: 'load_specific_game')]
+    public function loadSpecificGame(GameManager $gameManager, string $playerName): RedirectResponse
+    {
+        $gameManager->loadGame($playerName);
+
+        return $this->redirectToRoute('overworld');
+    }
+
+    #[Route('/save', name: 'save')]
+    public function saveGame(GameManager $gameManager): Response
+    {
+        $gameManager->saveGame();
         return $this->redirectToRoute('overworld');
     }
 

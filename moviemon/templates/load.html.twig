@@ -1,0 +1,18 @@
+{# templates/load.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Load Game</h1>
+
+    {% if saves is empty %}
+        <p>No saved games found.</p>
+    {% else %}
+        <ul>
+        {% for name in saves %}
+            <li><a href="{{ path('load_specific_game', { playerName: name }) }}">{{ name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <p><a href="{{ path('homepage') }}">Back to Menu</a></p>
+{% endblock %}

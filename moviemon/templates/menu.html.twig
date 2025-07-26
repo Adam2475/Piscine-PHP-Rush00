@@ -1,12 +1,17 @@
+{# templates/main_menu.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
 <div class="menu">
-    <p><a href="/new">new game</a></p>
-    <p>save game</p>
-    <p>load game</p>
-    <p>cancel</p>
-</div>
+    <form action="{{ path('new') }}" method="POST">
+        <label for="player_name">Enter Player Name:</label>
+        <input type="text" id="player_name" name="player_name" required>
+        <button type="submit">Start New Game</button>
+    </form>
 
+    <p><a href="{{ path('save') }}">Save Game</a><p>
+    <p><a href="{{ path('load') }}">Load Game</a><p>
+    <p><a href="{{ path('overworld') }}">Cancel</a></p>
+</div>
 {% endblock %}
+
