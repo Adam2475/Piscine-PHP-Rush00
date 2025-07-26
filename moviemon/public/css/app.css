@@ -12,10 +12,6 @@ body {
     text-align: center;
 }
 
-/* .map {
-    background-color: green;
-} */
-
 .row {
     display: flex;
     flex-direction: row;
@@ -43,6 +39,8 @@ body {
 
 .menu-button {
     margin-bottom: 2em;
+    width: 20%;
+    text-align: center;
 }
 
 .controls { 
@@ -72,12 +70,9 @@ body {
     /* margin-left: 10%; */
 }
 
-/* .catched {
-    width: 30%;
-} */
-
 .center {
     display:flex;
     justify-content: center;
     flex-direction: column;
+    align-items: center;
 }
