@@ -1,3 +1,7 @@
-TODO: aggiungere grandezza della mappa al game manager
+TODO: aggiungere grandezza della mappa al game manager | OK
 
-TODO: errore in moviemon no default loaded
+TODO: errore in moviemon no default loaded | OK (but how?)
+
+TODO: aggiungere controllo a dimensione mappa negativa
+
+TODO: fixare la dimensione delle mappa nel load
