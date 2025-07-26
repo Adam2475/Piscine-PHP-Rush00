@@ -10,10 +10,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use \App\Service\OmdbApiService;
 use App\Service\GameManager;
-
+use Psr\Log\LoggerInterface;
 
 class BattleController extends AbstractController
 {
+    private LoggerInterface $logger;
+
+    public function __construct(LoggerInterface $logger)
+        {
+            $this->logger = $logger;
+        }
+
     #[Route('/battle', name: 'battle')]
     public function index(Request $request, OmdbApiService $omdbApiService, GameManager $gameManager): Response
     {
@@ -28,7 +35,7 @@ class BattleController extends AbstractController
         $moviemon = $gameManager->getMoviemon($user, $moviemonName);
         if (!$moviemon instanceof Moviemon)
         {
-            logger()->error('Moviemon not found', ['moviemon' => $moviemonName]);
+            $this->logger->error('Moviemon not found', ['moviemon' => $moviemonName]);
             $this->addFlash('error', 'Moviemon not found');
             return $this->redirectToRoute('overworld');
         }
@@ -52,7 +59,7 @@ class BattleController extends AbstractController
         $moviemon = $gameManager->getMoviemon($user, $moviemonName);
         if (!$moviemon instanceof Moviemon)
         {
-            logger()->error('Moviemon not found', ['moviemon' => $moviemonName]);
+            $this->logger->error('Moviemon not found', ['moviemon' => $moviemonName]);
             $this->addFlash('error', 'Moviemon not found');
             return $this->redirectToRoute('overworld');
         }
@@ -82,7 +89,7 @@ class BattleController extends AbstractController
         $moviemon = $gameManager->getMoviemon($user, $moviemonName);
         if (!$moviemon instanceof Moviemon)
         {
-            logger()->error('Moviemon not found', ['moviemon' => $moviemonName]);
+            $this->logger->error('Moviemon not found', ['moviemon' => $moviemonName]);
             $this->addFlash('error', 'Moviemon not found');
             return $this->redirectToRoute('overworld');
         }
@@ -124,7 +131,7 @@ class BattleController extends AbstractController
         $moviemon = $gameManager->getMoviemon($user, $moviemonName);
         if (!$moviemon instanceof Moviemon)
         {
-            logger()->error('Moviemon not found', ['moviemon' => $moviemonName]);
+            $this->logger->errorr('Moviemon not found', ['moviemon' => $moviemonName]);
             $this->addFlash('error', 'Moviemon not found');
             return $this->redirectToRoute('overworld');
         }
@@ -154,7 +161,7 @@ class BattleController extends AbstractController
         $moviemon = $gameManager->getMoviemon($user, $moviemonName);
         if (!$moviemon instanceof Moviemon)
         {
-            logger()->error('Moviemon not found', ['moviemon' => $moviemonName]);
+            $this->logger->error('Moviemon not found', ['moviemon' => $moviemonName]);
             $this->addFlash('error', 'Moviemon not found');
             return $this->redirectToRoute('overworld');
         }
