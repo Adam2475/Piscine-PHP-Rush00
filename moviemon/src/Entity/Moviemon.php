@@ -9,6 +9,7 @@ class Moviemon
     private int $strength;
     private string $urlPoster;
     private string $plot;
+    private int $maxHealth;
 
     public function getName(): string
     {
@@ -54,5 +55,15 @@ class Moviemon
     public function setPlot(string $plot): void
     {
         $this->plot = $plot;
+    }
+
+    public function getMaxHealth(): int
+    {
+        return $this->maxHealth;
+    }
+    
+    public function setMaxHealth(int $maxHealth): void
+    {
+        $this->maxHealth = $maxHealth;
     }
 }
