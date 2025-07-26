@@ -101,7 +101,7 @@ class BattleController extends AbstractController
             $this->addFlash('success', 'You defeated ' . $moviemon->getName() . '!');
             $user->defeatMoviemon($moviemon);
             if ($user->hasWon()) {
-                return $this->redirectToRoute('result', ['victory' => true]);
+                return $this->redirectToRoute('result', ['victory' => 'true']);
             }
             return $this->redirectToRoute('overworld');
         }
@@ -133,7 +133,7 @@ class BattleController extends AbstractController
         if ($user->getHealth() <= 0)
         {
             $this->addFlash('error', 'You were defeated by ' . $moviemon->getName() . '!');
-            return $this->redirectToRoute('result', ['victory' => false]); // game over page
+            return $this->redirectToRoute('result', ['victory' => 'false']); // game over page
         }
         return $this->redirectToRoute('battle', [
             'moviemon' => $moviemon->getName()
@@ -175,10 +175,12 @@ class BattleController extends AbstractController
     }
 
     #[Route('/result/{victory}', name: 'result')]
-    public function result(bool $victory): Response
+    public function result(string $victory): Response
     {
+        $victoryBool = strtolower($victory) === 'true';
+
         return $this->render('resultscreen.html.twig', [
-            'victory' => $victory
+            'victory' => $victoryBool,
         ]);
     }
 }
