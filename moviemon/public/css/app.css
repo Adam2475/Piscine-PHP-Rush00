@@ -193,49 +193,46 @@ html, body {
 }
 
 .btn-fight {
-    background-color: #c0392b;
-    color: white;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: bold;
-    text-decoration: none;
     display: inline-block;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    transition: background-color 0.3s;
+    padding: 12px 24px;
+    font-size: 18px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
-
 .btn-fight:hover {
-    background-color: #e74c3c;
+    background-color: #a71d2a;
 }
 
 .btn-escape {
-    background-color: #f1c40f;
-    color: #333;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: bold;
-    text-decoration: none;
     display: inline-block;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    transition: background-color 0.3s;
+    padding: 12px 24px;
+    font-size: 18px;
+    background-color: #ffc107;
+    color: #212529;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
-
 .btn-escape:hover {
-    background-color: #f39c12;
+    background-color: #e0a800;
 }
 
 .btn-catch {
-    background-color: #2ecc71;
-    color: white;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: bold;
-    text-decoration: none;
     display: inline-block;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    transition: background-color 0.3s;
+    padding: 12px 24px;
+    font-size: 18px;
+    background-color: #17a2b8;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
-
 .btn-catch:hover {
-    background-color: #27ae60;
+    background-color: #117a8b;
 }
