@@ -58,9 +58,9 @@ class OmdbApiService
         $moviemon->setHealth(round($imdbRating * 10) ?? 10);
         $moviemon->setMaxHealth($moviemon->getHealth());
         $moviemon->setStrength(round($metascore) ?? 10);
-        $posterUrl = $data['Poster'] ?? '/images/unknown_poster.jpg';
+        $posterUrl = $data['Poster'] ?? '/images/unknown_poster.png';
         if ($this->empty_url($posterUrl))
-            $posterUrl = '/images/unknown_poster.jpg';
+            $posterUrl = '/images/unknown_poster.png';
         $this->logger->info(($data['Title'] ?? 'Unknown') . ' URL: ' . $posterUrl);
         $moviemon->setUrlPoster($posterUrl);
         $moviemon->setPlot($data['Plot'] ?? 'Unknown plot');
