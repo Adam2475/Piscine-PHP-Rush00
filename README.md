@@ -26,6 +26,19 @@ sudo apt install php-mysql
 
 composer create-project symfony/website-skeleton moviemon
 
+# Aggiornare tutte le dipendenze alla versione più recente consentita da 
+composer update
+
+# Avviare il server di sviluppo Symfony
+symfony serve
+
+
+# Sequenza
+composer create-project symfony/website-skeleton moviemon
+cd moviemon
+composer install          
+symfony serve 
+
 # Ruoli:
 
 ## Persona 1:
