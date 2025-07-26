@@ -39,10 +39,14 @@ body {
 
 .menu-button {
     margin-bottom: 2em;
-    width: 20%;
+    min-width: 120px;     
+    padding: 10px 20px;
+    font-size: 16px;    
     text-align: center;
+    white-space: nowrap;   
+    overflow: hidden;    
+    text-overflow: ellipsis; 
 }
-
 .controls { 
     display: grid; 
     grid-template-columns: 50px 50px 50px; 
