@@ -62,6 +62,7 @@ class OmdbApiService
             $posterUrl = '/images/unknown_poster.jpg';
         $this->logger->info(($data['Title'] ?? 'Unknown') . ' URL: ' . $posterUrl);
         $moviemon->setUrlPoster($posterUrl);
+        $moviemon->setPlot($data['Plot'] ?? 'Unknown plot');
         return $moviemon;
     }
 

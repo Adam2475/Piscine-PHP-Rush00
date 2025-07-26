@@ -6,8 +6,8 @@
     <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;">
         <div style="width: 100%; text-align: center; margin-bottom: 10px;">
             <strong>User</strong><br>
-            <span style="color: #2d7a2d;">Vita: {{ user.health }}</span> |
-            <span style="color: #1e4b8a;">Forza: {{ user.strength }}</span>
+            <span style="color: #2d7a2d;">Health: {{ user.health }}</span> |
+            <span style="color: #1e4b8a;">Strength: {{ user.strength }}</span>
         </div>
         <img id="user-backsprite" src="/moviemon/backsprite.png" alt="Backsprite" style="width: 120px; margin-bottom: 20px; margin-top: 10px; transition: transform 0.2s;">
     </div>
@@ -16,8 +16,8 @@
     <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;">
         <div style="width: 100%; text-align: center; margin-bottom: 10px;">
             <strong>{{ moviemon.name }}</strong><br> 
-            <span style="color: #c0392b;">Vita: {{ moviemon.health }}</span> |
-            <span style="color: #8e44ad;">Forza: {{ moviemon.strength }}</span>
+            <span style="color: #c0392b;">Health: {{ moviemon.health }}</span> |
+            <span style="color: #8e44ad;">Strength: {{ moviemon.strength }}</span>
         </div>
         <img id="moviemon-poster" src="{{ moviemon.urlPoster }}" alt="Moviemon Poster" style="width: 180px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: transform 0.2s;">
     </div>

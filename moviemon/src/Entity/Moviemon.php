@@ -8,6 +8,7 @@ class Moviemon
     private int $health;
     private int $strength;
     private string $urlPoster;
+    private string $plot;
 
     public function getName(): string
     {
@@ -43,5 +44,15 @@ class Moviemon
     public function setUrlPoster(string $urlPoster): void
     {
         $this->urlPoster = $urlPoster;
+    }
+
+    public function getPlot(): string
+    {
+        return $this->plot;
+    }
+
+    public function setPlot(string $plot): void
+    {
+        $this->plot = $plot;
     }
 }
