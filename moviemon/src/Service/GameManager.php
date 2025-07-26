@@ -110,12 +110,13 @@ class GameManager
 
     public function rand_encounter(array $moviemons): ?Moviemon
     {
+        $moviemons = array_values($moviemons);
         $n_moviemons = count($moviemons);
         if ($n_moviemons === 0)
             return null;
         $i = random_int(0, $n_moviemons - 1);
 
-        if (random_int(0, 13 - $n_moviemons) != 0)
+        if (random_int(0, 1) != 0)
             return null;
         return $moviemons[$i] ?? null;
     }

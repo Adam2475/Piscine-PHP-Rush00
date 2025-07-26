@@ -139,4 +139,9 @@ class User
         $this->health = $this->max_health;
         $this->strength += $moviemon->getStrength() / 10;
     }
+
+    public function hasWon(): bool
+    {
+        return count($this->remainingMoviemons) === 0;
+    }
 }
