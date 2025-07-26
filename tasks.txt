@@ -5,3 +5,5 @@ TODO: errore in moviemon no default loaded | OK (but how?)
 TODO: aggiungere controllo a dimensione mappa negativa
 
 TODO: fixare la dimensione delle mappa nel load
+
+TODO: fixare starting point utente
