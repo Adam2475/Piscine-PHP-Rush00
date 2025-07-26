@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div style="display: flex; flex-direction: row; height: 80vh;">
+    <!-- User section -->
+    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;">
+        <div style="width: 100%; text-align: center; margin-bottom: 10px;">
+            <strong>User</strong><br>
+            <span style="color: #2d7a2d;">Vita: {{ user.health }}</span> |
+            <span style="color: #1e4b8a;">Forza: {{ user.strength }}</span>
+        </div>
+        <img src="/moviemon/backsprite.png" alt="Backsprite" style="width: 120px; margin-bottom: 20px; margin-top: 10px;">
+    </div>
+
+    <!-- Moviemon section -->
+    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;">
+        <div style="width: 100%; text-align: center; margin-bottom: 10px;">
+            <strong>{{ moviemon.name }}</strong><br>
+            <span style="color: #c0392b;">Vita: {{ moviemon.health }}</span> |
+            <span style="color: #8e44ad;">Forza: {{ moviemon.strength }}</span>
+        </div>
+        <img src="{{ moviemon.urlPoster }}" alt="Moviemon Poster" style="width: 180px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+    </div>
+
+    <!-- Actions section -->
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;">
+        <div style="width: 100%; padding: 30px; background: rgba(255,255,255,0.95); border-radius: 12px 12px 0 0; box-shadow: 0 -2px 8px rgba(0,0,0,0.08);">
+            <h2 style="margin-bottom: 24px;">Cosa vuoi fare?</h2>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 16px;"><a href="{{ path('battle_fight', {'moviemon': moviemon.name}) }}" class="btn btn-primary">Fight</a></li>
+                <li><a href="{{ path('battle_escape', {'moviemon': moviemon.name}) }}" class="btn btn-secondary">Escape</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

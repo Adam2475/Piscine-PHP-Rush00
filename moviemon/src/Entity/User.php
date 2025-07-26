@@ -96,4 +96,35 @@ class User
     {
         $this->remainingMoviemons = $remainingMoviemons;
     }
+
+    /**
+     * @param Moviemon[] $capturedMoviemons
+     */
+    public function defeatMoviemon(Moviemon $moviemon): void
+    {
+        $this->capturedMoviemons[] = $moviemon;
+        $this->gainHealthAndStrength($moviemon);
+        $this->removeRemainingMoviemon($moviemon);
+    }
+
+    /**
+     * @param Moviemon[] $remainingMoviemons
+     */
+    private function removeRemainingMoviemon(Moviemon $moviemon): void
+    {
+        foreach ($this->remainingMoviemons as $key => $remainingMoviemon)
+        {
+            if ($remainingMoviemon->getName() === $moviemon->getName())
+            {
+                unset($this->remainingMoviemons[$key]);
+                break;
+            }
+        }
+    }
+
+    private function gainHealthAndStrength(Moviemon $moviemon): void
+    {
+        $this->health += $moviemon->getHealth() / 10;
+        $this->strength += $moviemon->getStrength() / 10;
+    }
 }

@@ -7,6 +7,7 @@ use App\Service\OmdbApiService;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use App\Entity\Moviemon;
 
 class GameManager
 {
@@ -106,5 +107,28 @@ class GameManager
         $this->filesystem->dumpFile($filename, $json);
         $this->session->set('user', $user);
     }
-}
 
+    public function rand_encounter(array $moviemons): ?Moviemon
+    {
+        $n_moviemons = count($moviemons);
+        if ($n_moviemons === 0)
+            return null;
+        $i = random_int(0, $n_moviemons - 1);
+
+        if (random_int(0, 13 - $n_moviemons) != 0)
+            return null;
+        return $moviemons[$i] ?? null;
+    }
+
+    public function getMoviemon(User $user, string $moviemonName): ?Moviemon
+    {
+        foreach ($user->getRemainingMoviemons() as $moviemon)
+        {
+            if ($moviemon->getName() === $moviemonName)
+            {
+                return $moviemon;
+            }
+        }
+        return null;
+    }
+}

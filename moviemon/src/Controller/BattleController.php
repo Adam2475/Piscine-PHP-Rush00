@@ -1,0 +1,131 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\User;
+use App\Entity\Moviemon;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use \App\Service\OmdbApiService;
+use App\Service\GameManager;
+
+
+class BattleController extends AbstractController
+{
+    #[Route('/battle', name: 'battle')]
+    public function index(Request $request, OmdbApiService $omdbApiService, GameManager $gameManager): Response
+    {
+        $user = $gameManager->getUser();
+        if (!$user instanceof User)
+            return $this->redirectToRoute('homepage');
+        $moviemonName = $request->query->get('moviemon');
+        if (!is_string($moviemonName) || $moviemonName === '') {
+            $this->addFlash('error', 'No Moviemon specified.');
+            return $this->redirectToRoute('overworld');
+        }
+        $moviemon = $gameManager->getMoviemon($user, $moviemonName);
+        if (!$moviemon instanceof Moviemon)
+        {
+            logger()->error('Moviemon not found', ['moviemon' => $moviemonName]);
+            $this->addFlash('error', 'Moviemon not found');
+            return $this->redirectToRoute('overworld');
+        }
+        return $this->render('battle.html.twig', [
+            'user' => $user,
+            'moviemon' => $moviemon
+        ]);
+    }
+
+    #[Route('/battle/escape', name: 'battle_escape', methods: ['GET'])]
+    public function escape(Request $request, GameManager $gameManager): Response
+    {
+        $user = $gameManager->getUser();
+        if (!$user instanceof User)
+            return $this->redirectToRoute('homepage');
+        $moviemonName = $request->query->get('moviemon');
+        if (!is_string($moviemonName) || $moviemonName === '') {
+            $this->addFlash('error', 'No Moviemon specified.');
+            return $this->redirectToRoute('overworld');
+        }
+        $moviemon = $gameManager->getMoviemon($user, $moviemonName);
+        if (!$moviemon instanceof Moviemon)
+        {
+            logger()->error('Moviemon not found', ['moviemon' => $moviemonName]);
+            $this->addFlash('error', 'Moviemon not found');
+            return $this->redirectToRoute('overworld');
+        }
+        if (random_int(0, 4) != 0)
+        {
+            $this->addFlash('success', 'You escaped successfully!');
+            return $this->redirectToRoute('overworld');
+        }
+        else
+        {
+            $this->addFlash('error', 'You failed to escape!');
+            return $this->redirectToRoute('battle_losehp', ['moviemon' => $moviemon->getName()]);
+        }
+    }
+
+    #[Route('/battle/fight', name: 'battle_fight', methods: ['GET'])]
+    public function fight(Request $request, GameManager $gameManager): Response
+    {
+        $user = $gameManager->getUser();
+        if (!$user instanceof User)
+            return $this->redirectToRoute('homepage');
+        $moviemonName = $request->query->get('moviemon');
+        if (!is_string($moviemonName) || $moviemonName === '') {
+            $this->addFlash('error', 'No Moviemon specified.');
+            return $this->redirectToRoute('overworld');
+        }
+        $moviemon = $gameManager->getMoviemon($user, $moviemonName);
+        if (!$moviemon instanceof Moviemon)
+        {
+            logger()->error('Moviemon not found', ['moviemon' => $moviemonName]);
+            $this->addFlash('error', 'Moviemon not found');
+            return $this->redirectToRoute('overworld');
+        }
+        $damage = random_int(1, $user->getStrength());
+        $moviemon->setHealth(max(0, $moviemon->getHealth() - $damage));
+        if ($moviemon->getHealth() <= 0)
+        {
+            $this->addFlash('success', 'You defeated ' . $moviemon->getName() . '!');
+            $user->defeatMoviemon($moviemon);
+            return $this->redirectToRoute('overworld');
+        }
+        return $this->redirectToRoute('battle_losehp', [
+            'moviemon' => $moviemon->getName()
+        ]);
+    }
+
+    #[Route('/battle/losehp', name: 'battle_losehp', methods: ['GET'])]
+    public function loseHp(Request $request, GameManager $gameManager): Response
+    {
+        $user = $gameManager->getUser();
+        if (!$user instanceof User)
+            return $this->redirectToRoute('homepage');
+        $moviemonName = $request->query->get('moviemon');
+        if (!is_string($moviemonName) || $moviemonName === '') {
+            $this->addFlash('error', 'No Moviemon specified.');
+            return $this->redirectToRoute('overworld');
+        }
+        $moviemon = $gameManager->getMoviemon($user, $moviemonName);
+        if (!$moviemon instanceof Moviemon)
+        {
+            logger()->error('Moviemon not found', ['moviemon' => $moviemonName]);
+            $this->addFlash('error', 'Moviemon not found');
+            return $this->redirectToRoute('overworld');
+        }
+        $damage = round(random_int(1, $moviemon->getStrength()) / 2);
+        $user->setHealth(max(0, $user->getHealth() - $damage));
+        if ($user->getHealth() <= 0)
+        {
+            $this->addFlash('error', 'You were defeated by ' . $moviemon->getName() . '!');
+            return $this->redirectToRoute('overworld'); // or game over page
+        }
+        return $this->redirectToRoute('battle', [
+            'moviemon' => $moviemon->getName()
+        ]);
+    }
+}

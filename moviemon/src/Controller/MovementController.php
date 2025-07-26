@@ -44,6 +44,13 @@ class MovementController extends AbstractController
 
         $user->setPosition([$x, $y]);
 
+        $moviemon = $gameManager->rand_encounter($user->getRemainingMoviemons());
+        if ($moviemon !== null)
+        {
+            return $this->redirectToRoute('battle', [
+                'moviemon' => $moviemon->getName()
+            ]);
+        }
         return $this->redirectToRoute('overworld');
     }
 
