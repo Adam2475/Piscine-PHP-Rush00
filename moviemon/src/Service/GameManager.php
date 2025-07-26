@@ -116,7 +116,7 @@ class GameManager
             return null;
         $i = random_int(0, $n_moviemons - 1);
 
-        if (random_int(1, 100) > 60)
+        if (random_int(1, 100) <= 20)
             return null;
         return $moviemons[$i] ?? null;
     }
