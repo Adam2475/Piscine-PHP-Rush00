@@ -9,11 +9,33 @@ use App\Entity\Moviemon;
 class OmdbApiService
 {
     private HttpClientInterface $httpClient;
+    private $logger;
 
-    public function __construct(HttpClientInterface $httpClient)
+    public function __construct(HttpClientInterface $httpClient, \Psr\Log\LoggerInterface $logger)
     {
         $this->httpClient = $httpClient;
+        $this->logger = $logger;
         $this->apiKey = $_ENV['API_KEY'];
+    }
+
+    private function empty_url(string $url): bool
+    {
+        if (!$url || $url === 'N/A')
+            return true;
+        if (str_starts_with($url, 'http'))
+        {
+            try
+            {
+                $headers = @get_headers($url);
+                if ($headers && strpos($headers[0], '200') !== false)
+                    return false;
+            }
+            catch (\Throwable $e)
+            {
+            }
+            return true;
+        }
+        return false;
     }
 
     private function fetchMoviemonById(string $id): ?Moviemon
@@ -26,7 +48,7 @@ class OmdbApiService
         }
         catch (\Throwable $e)
         {
-            logger()->error('Error fetching data from OMDB API: ' . $e->getMessage());
+            $this->logger->error('Error fetching data from OMDB API: ' . $e->getMessage());
             return null;
         }
         $moviemon = new Moviemon();
@@ -35,7 +57,11 @@ class OmdbApiService
         $metascore = is_numeric($data['Metascore'] ?? null) ? (int)$data['Metascore'] : 50;
         $moviemon->setHealth(round($imdbRating * 10) ?? 10);
         $moviemon->setStrength(round($metascore) ?? 10);
-        $moviemon->setUrlPoster($data['Poster'] ?? '');
+        $posterUrl = $data['Poster'] ?? '/images/unknown_poster.jpg';
+        if ($this->empty_url($posterUrl))
+            $posterUrl = '/images/unknown_poster.jpg';
+        $this->logger->info(($data['Title'] ?? 'Unknown') . ' URL: ' . $posterUrl);
+        $moviemon->setUrlPoster($posterUrl);
         return $moviemon;
     }
 
