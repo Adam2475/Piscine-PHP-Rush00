@@ -11,8 +11,8 @@ use App\Entity\Moviemon;
 
 class GameManager
 {
+    private $mapSize = [];
     private const SAVE_DIR = __DIR__ . '/../../var/saves/';
-
     private $session;
     private SerializerInterface $serializer;
     private Filesystem $filesystem;
@@ -27,6 +27,7 @@ class GameManager
         $this->serializer = $serializer;
         $this->omdb = $omdb;
         $this->filesystem = new Filesystem();
+        $this->mapSize = [6, 6];
 
         if (!$this->filesystem->exists(self::SAVE_DIR)) {
             $this->filesystem->mkdir(self::SAVE_DIR);
@@ -131,5 +132,10 @@ class GameManager
             }
         }
         return null;
+    }
+
+    public function getMapSize(): array
+    {
+        return $this->mapSize;
     }
 }

@@ -117,9 +117,11 @@ class OverworldController extends AbstractController
     public function generateMap(GameManager $gameManager)
     {
         $grid = [];
-
-        $rows = 5;
-        $columns = 5;
+        $mapSize = [];
+        $mapSize = $gameManager->getMapSize();
+        // var_dump($mapSize);
+        $rows = $mapSize[0];
+        $columns = $mapSize[1];
 
         $user = $gameManager->getUser();
         $playerPosition = $user->getPosition();
