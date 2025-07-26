@@ -88,6 +88,14 @@ class BattleController extends AbstractController
             return $this->redirectToRoute('overworld');
         }
         $damage = random_int(1, $user->getStrength());
+        if (random_int(0, 9) < 4)
+        {
+            $this->addFlash('error', 'You missed your attack!');
+            return $this->redirectToRoute('battle_losehp', [
+                'moviemon' => $moviemon->getName()
+            ]);
+        }
+        $this->addFlash('success', 'You hit ' . $moviemon->getName() . ' for ' . $damage . ' damage!');
         $moviemon->setHealth(max(0, $moviemon->getHealth() - $damage));
         if ($moviemon->getHealth() <= 0)
         {
@@ -95,7 +103,7 @@ class BattleController extends AbstractController
             $user->defeatMoviemon($moviemon);
             return $this->redirectToRoute('overworld');
         }
-        return $this->redirectToRoute('battle_losehp', [
+        return $this->redirectToRoute('battle', [
             'moviemon' => $moviemon->getName()
         ]);
     }
@@ -154,7 +162,7 @@ class BattleController extends AbstractController
         if (random_int(0, 100) < $probability)
         {
             $this->addFlash('success', 'You caught ' . $moviemon->getName() . '!');
-            $user->catchMoviemon($moviemon);
+            $user->defeatMoviemon($moviemon);
             return $this->redirectToRoute('overworld');
         }
         else

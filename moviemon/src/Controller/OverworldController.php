@@ -132,11 +132,21 @@ class OverworldController extends AbstractController
             $grid[] = $row;
         }
 
-        $grid[$playerPosition[0]][$playerPosition[1]] = 'P';
+        $grid[$playerPosition[0]][$playerPosition[1]] = 'L';
 
         return ($grid);
     }
 
+    #[Route('/overworld/moviedex', name: 'moviedex')]
+    public function moviedex(GameManager $gameManager): Response
+    {
+        $user = $gameManager->getUser();
+        $catched = $this->getCatchedMovies($gameManager);
+        return $this->render('moviedex.html.twig', [
+            'user' => $user,
+            'catched' => $catched,
+        ]);
+    }
 }
 
 ?>
