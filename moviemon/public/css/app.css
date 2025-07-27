@@ -236,3 +236,34 @@ html, body {
 .btn-catch:hover {
     background-color: #117a8b;
 }
+
+@keyframes epicHit {
+  0%   { transform: scale(1) translate(0, 0); filter: brightness(1); }
+  10%  { transform: scale(1.1) translate(-5px, 0); filter: brightness(2); }
+  20%  { transform: scale(1) translate(5px, 0); }
+  30%  { transform: scale(1.1) translate(-3px, 0); }
+  40%  { transform: scale(1) translate(3px, 0); }
+  50%  { transform: scale(1.05) translate(-2px, 0); filter: brightness(1.5); }
+  60%  { transform: scale(1) translate(2px, 0); }
+  70%  { transform: scale(1.02); }
+  80%  { transform: scale(1); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+.epic-hit {
+  animation: epicHit 0.6s ease-in-out;
+  z-index: 9999;
+}
+
+@keyframes screenShake {
+  0%   { transform: translate(0px, 0px); }
+  20%  { transform: translate(-5px, 5px); }
+  40%  { transform: translate(5px, -5px); }
+  60%  { transform: translate(-3px, 3px); }
+  80%  { transform: translate(3px, -3px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+.shake-screen {
+  animation: screenShake 0.4s ease-in-out;
+}
