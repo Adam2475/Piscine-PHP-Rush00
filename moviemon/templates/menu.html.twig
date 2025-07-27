@@ -5,14 +5,17 @@
 
     <img src="{{ asset('images/moviemon.png') }}" width="500" alt="Moviemon">
 
-    <form action="{{ path('new') }}" method="POST">
-        <br>
-        <label for="player_name">Enter Player Name:</label>
-        <input type="text" id="player_name" name="player_name" required>
-        <br>
-        <label for="map_size">Set map size:</label>
-        <input type="number" id="map_size" name="map_size" required>
-        <br><br>
+    <form action="{{ path('new') }}" method="POST" class="form-section">
+        <div class="form-group">
+            <label for="player_name">👤 Enter Player Name:</label>
+            <input type="text" id="player_name" name="player_name" class="styled-input" required>
+        </div>
+
+        <div class="form-group">
+            <label for="map_size">🗺️ Set Map Size:</label>
+            <input type="number" id="map_size" name="map_size" class="styled-input" required>
+        </div>
+
         <button type="submit" class="menu-btn start">🎮 Start New Game</button>
     </form>
 
