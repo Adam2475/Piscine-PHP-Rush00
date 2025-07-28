@@ -28,7 +28,7 @@ class GameManager
         $this->omdb = $omdb;
         $this->filesystem = new Filesystem();
         // $this->mapSize = [6, 6];
-        $this->mapSize = $this->session->get('map_size');
+        $this->mapSize = $this->session->get('map_size') ?? 6;
 
         if (!$this->filesystem->exists(self::SAVE_DIR)) {
             $this->filesystem->mkdir(self::SAVE_DIR);
@@ -48,6 +48,7 @@ class GameManager
         $ids = $this->omdb->getCatchableMoviemon();
         $moviemons = $this->omdb->populateMoviemon($ids);
 
+        $user->setMapSize($mapSize);
         $user->setRemainingMoviemons($moviemons);
         $user->setCapturedMoviemons([]);
 
@@ -82,6 +83,10 @@ class GameManager
 
         $this->session->set('user_name', $username);
         $this->session->set('user', $user);
+
+        // Aggiorna la mapsize del GameManager e Session
+        $this->mapSize = $user->getMapSize();
+        $this->session->set('map_size', $this->mapSize);
     }
 
     public function resetGame(): void
@@ -142,13 +147,15 @@ class GameManager
         return null;
     }
 
+    public function setMapSize(int $mapSize): void
+    {
+        $this->mapSize = $mapSize;
+        $this->session->set('map_size', $mapSize);
+    }
+
     public function getMapSize(): int
     {
         return $this->mapSize;
     }
 
-    public function setMapSize(int $mapSize): void
-    {
-        $this->mapSize = array($mapSize, $mapSize);
-    }
 }

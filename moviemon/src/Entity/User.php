@@ -10,6 +10,7 @@ class User
     private int $health = 100;
     private int $strength = 10;
     private array $position = [2, 2];
+    private int $mapSize = 6;
     private int $max_health = 100;
 
     /** @var Moviemon[] */
@@ -64,6 +65,16 @@ class User
     public function setPosition(array $position): void
     {
         $this->position = $position;
+    }
+
+    public function getMapSize(): int
+    {
+        return $this->mapSize;
+    }
+
+    public function setMapSize(int $mapSize): void
+    {
+        $this->mapSize = $mapSize;
     }
 
     public function getMaxHealth(): int
